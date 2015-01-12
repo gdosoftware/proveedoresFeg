@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+           http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+    
+    <!--    hay que agregar el esquema para jpa es muy importante agragar los jar para com.springsource.org.aopalliance-1.0.0.jar y 
+    los spring-data-commons y spring-dat-jpa y spring-aop para  que funciones-->
+    <tx:annotation-driven/>
+    
+<!--     <context:property-placeholder location="classpath:DogResources.properties" />-->
+<!--      <context:component-scan base-package="com.dog" /> OJO CON ESTE QUE LO COMENTE Y LO DEJE SOLO EN EL DISPATCHER CUALQUIER PROBLEMA DESCOMENTARLO-->
+   
+     <!-- JSR-303 support will be detected on classpath and enabled automatically -->
+<!--    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+    <bean id="myDS" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="showSql" value="true"/>
+        <property name="generateDdl" value="true"/>
+        <property name="database" value="MYSQL"/>
+    </bean>
+
+    <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="myDS"/>
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+        <property name="packagesToScan" value="com.dog.tools.entity,${package.entity}"/>
+    </bean>
+    
+    <bean id="myTM" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="emf"/>
+     </bean>
+    
+    <jpa:repositories base-package="com.dog.tools.repository,com.dog.repositorio" entity-manager-factory-ref="emf"
+         transaction-manager-ref="myTM" /> -->
+<!--repository-impñ-postfix me sirve para que todas las interfaces que coloque dentro del paquete de escaneo
+las puedo implementar con la naotacion @repository y que terminene con el postsuffix y de esta manera spring
+me vincula la interfaz con la implementacion cuando quiero cablearlas
+public interface MiServicio    public class MiServicioImpl implements MiServicio-->
+
+
+
+
+<!-- /////////////////////////////////////////////////////////
+
+
+PARA EL CASO DE UTILIZAR UNA UNIDAD DE PERSISTENCIA DEFINIDA EN LA APLICAION-->
+  <bean id="myemf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+         <property name="persistenceUnitName" value="proveedoresFegPU"/>
+          <property name="packagesToScan" value="com.dog.entity"/>
+     </bean>
+     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="myemf"/> 
+     </bean>
+     
+    <jpa:repositories base-package="com.dog" 
+                      entity-manager-factory-ref="myemf" 
+                      transaction-manager-ref="transactionManager"/>  
+</beans>
+    <!--                             DEFINICION DE BASE DE DATOS DE SEGURIDAD-->
+    
+<!--     tuve que crear otra unidad de persisitencia para que me funcionen los entity callbacks-->
+<!--     <bean id="emfSecurity" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+         <property name="persistenceUnitName" value="securitySpringPU"/>
+          <property name="packagesToScan" value="com.dog.tools.entity"/>
+     </bean>
+     <bean id="tmSecurity" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="emfSecurity"/> si fuera solo un emf no es necesario aclarar
+     </bean>
+     
+    <jpa:repositories base-package="com.dog.tools.repository" entity-manager-factory-ref="emfSecurity" 
+                      transaction-manager-ref="tmSecurity"/>-->
+  

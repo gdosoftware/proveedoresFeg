@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+  
+
+    <definition name="home.def" template="/WEB-INF/jsp/layout.jsp">
+        <put-attribute name="header" value="/WEB-INF/jsp/header.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/jsp/menu.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/home.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />
+    </definition>
+ 
+ 
+ 
+<!--                            AUTENTICACION-->
+    <definition name="login.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/auth/loginpage.jsp" />
+    </definition>
+    
+    <definition name="denied.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/auth/denied.jsp" />
+    </definition>
+    
+    <definition name="logout.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/auth/logout.jsp" />
+    </definition>
+   
+<!--                        usuario-->
+   
+   <definition name="usuario.crud.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/usuario/usuariocrud.jsp" />
+    </definition>
+   
+    <definition name="usuario.create.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/usuario/usuariocreate.jsp" />
+    </definition>
+    
+     <definition name="usuario.retrieve.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/usuario/usuarioretrieve.jsp" />
+    </definition>
+    
+    <definition name="usuario.update.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/usuario/usuarioupdate.jsp" />
+    </definition>
+    
+    <definition name="usuario.profile.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/usuario/usuarioprofile.jsp" />
+    </definition>
+    
+ <!--                Comprador Factura                  -->   
+    <definition name="comprador.factura.gestion.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/comprador/facturagestion.jsp" />
+    </definition>
+     <definition name="comprador.factura.validar.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/comprador/confirmarfactura.jsp" />
+    </definition>
+    
+    
+    
+    
+    
+<!--                Contable Factura                  -->
+    
+    <definition name="contable.factura.gestion.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/contable/facturagestion.jsp" />
+    </definition>
+    
+    <definition name="contable.factura.validar.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/contable/validarfactura.jsp" />
+    </definition>
+    
+    <definition name="contable.factura.pagar.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/contable/pagarfactura.jsp" />
+    </definition>
+    
+    <definition name="contable.factura.pagas.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/contable/facturaspagas.jsp" />
+    </definition>
+    
+    <definition name="contable.factura.rechazadas.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/contable/facturasrechazadas.jsp" />
+    </definition>
+    
+    <definition name="contable.factura.search.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/contable/facturasearch.jsp" />
+    </definition>
+
+    <definition name="contable.factura.reportes.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/contable/reportes.jsp" />
+    </definition>
+    
+    <!--                            PROVEEDOR FACTURA-->
+
+    <definition name="proveedor.factura.upload.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/proveedor/facturaupload.jsp" />
+    </definition>
+    
+    <definition name="proveedor.factura.avisorecepcion.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/proveedor/avisorecepcion.jsp" />
+    </definition>
+    
+    <definition name="proveedor.factura.pendiente.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/proveedor/facturaspendiente.jsp" />
+    </definition>
+    
+    <definition name="proveedor.factura.cobradas.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/proveedor/facturascobradas.jsp" />
+    </definition>
+    
+     <definition name="proveedor.factura.search.def" extends="home.def">
+        <put-attribute name="body" value="/WEB-INF/jsp/proveedor/facturasearch.jsp" />
+    </definition>
+</tiles-definitions>

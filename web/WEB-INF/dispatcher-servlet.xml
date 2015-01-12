@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    
+    <context:component-scan base-package="com.dog" />  
+    <security:global-method-security secured-annotations="enabled" pre-post-annotations="enabled" />
+     <!-- support JSR303 annotation if JSR 303 validation present on classpath -->
+
+<!--    <mvc:annotation-driven />-->
+
+    <!--       declaro el archivo de propiedades ubicado en  build/web/WEB-INF/classes-->
+   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+	<property name="basename" value="message" />
+   </bean>  
+<!--   este me permitira intercepar el llamado bajo lang para cambiar el idioma, si no estuviersa el idioma lo elige deacuero a lo que le informa el browser
+   de cual es el idiioma que utiliza el ususario   -->
+   <bean id="localeChangeInterceptor"  class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+          <property name="paramName" value="lang" />
+    </bean>
+    
+    <bean id="localeResolver"
+        class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="en" />
+    </bean>
+    
+  <!--   <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+       <property name="defaultLocale" value="en"/> defino el edioma de preferencia y lo guardo en una cookie
+    </bean>-->
+
+    <bean id="handlerMapping"  class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <property name="interceptors">
+             <list>
+                <ref bean="localeChangeInterceptor" /> <!-- agrego el interceptor-->
+            </list>
+         </property>
+    </bean>
+        
+<!--    <bean id="viewResolver"  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean> reemplazado por tiles-->
+ 
+    
+ <bean id="viewResolver1" class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="order" value="1"/>
+        <property name="location" value="/WEB-INF/views.xml"/>
+ </bean>       
+             
+ <bean id="viewResolver"
+    class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+     <property name="order" value="2"/>
+    <property name="viewClass">
+        <value>
+            org.springframework.web.servlet.view.tiles2.TilesView
+        </value>
+    </property>
+</bean>
+<bean id="tilesConfigurer"
+    class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+    <property name="definitions">
+        <list>
+            <value>/WEB-INF/tiles.xml</value>
+        </list>
+    </property>
+</bean>
+                 
+              
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="3500000"/>
+    </bean>         
+         
+
+          <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+            <property name="formatterRegistrars">
+                <list>
+                    <bean class="com.dog.tools.formatters.DogFormatterRegistrar"/>
+                </list>
+            </property>
+          </bean>
+   
+              
+
+          <mvc:annotation-driven conversion-service="conversionService" />
+          <mvc:resources  mapping="/image/**" location="/img/" /> 
+          <mvc:resources  mapping="/js/**" location="/js/" /> 
+          <mvc:resources  mapping="/css/**" location="/css/" /> 
+           <mvc:resources  mapping="/fonts/**" location="/fonts/" />
+           <mvc:resources  mapping="/less/**" location="/less/" /> 
+        <!--    <mvc:resources  mapping="/empleado/fonts/**" location="/fonts/" />  
+         <mvc:resources  mapping="/image/**" location="classpath:resources/image/" /> -->
+
+          
+          
+        
+
+
+</beans>
